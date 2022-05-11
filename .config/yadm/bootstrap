@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+export DOTFILES=$HOME/.dotfiles
+
+set -xe
+
+echo "submodules: init"
+yadm submodule update --recursive --init
+
+SYSTEM_TYPE=$(uname -s)
+HOSTNAME="Kwasi-MBP"
+
+function install:mac() {
+    if test ! $(which brew); then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    brew update
+    brew tap homebrew/bundle
+    brew bundle --file "$DOTFILES/Brewfile"
+    brew upgrade
+
+    # create directories
+    mkdir -p $HOME/.cache
+    mkdir -p $HOME/src
+
+    rm -f $HOME/.zshrc
+    ln -s $DOTFILES/.zshrc $HOME/.zshrc
+
+    # hide "last login" message
+    touch $HOME/.hushlogin
+    # configure wallpaper
+    m wallpaper "$HOME/Pictures/Wallpaper.png"
+
+    # hide audit and funding messages from npm
+    npm config -g set audit false
+    npm config -g set fund false
+
+    sudo -v
+    # configure hostname
+    sudo scutil --set ComputerName "$HOSTNAME"
+    sudo scutil --set HostName "$HOSTNAME"
+    sudo scutil --set LocalHostName "$HOSTNAME"
+    sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$HOSTNAME"
+}
+
+function install:linux() {
+    ln -s $DOTFILES/.zshrc $HOME/.zshrc
+}
+
+case "$SYSTEM_TYPE" in
+    Darwin)
+        echo "system: macos"
+        install:mac
+        ;;
+    Linux)
+        echo "system: linux"
+        install:linux
+        ;;
+esac

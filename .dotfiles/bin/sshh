@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+
+#
+# Small host manager for SSH, shows entries in $HOME/.ssh/config
+#
+# Author: Bram Ceulemans
+#
+
+print_help() {
+	printf "SSHH: SSH Helper\n"
+	printf " made by Bram Ceulemans (bram@ceulemans.dev)\n\n"
+	printf "Command-line utility to quickly connect to configured SSH hosts.\n"
+	printf "\n"
+	printf "Options:\n"
+	printf " -h, --help\t\tshow this help text\n"
+	printf " -l, --list\t\tlist detected hosts\n"
+	printf " -o, --once\t\tshow menu only once\n"
+	printf "\n"
+	printf "Environment variables:\n"
+	printf " SSHH_SSH_CONFIG\tconfigure location of ssh config file\n"
+}
+
+print_hosts() {
+	if ! [[ -f "${SSHH_SSH_CONFIG}" ]]; then
+		return 1
+	fi
+
+	grep -E 'Host\s+[a-zA-Z0-9.-\s]+' "${SSHH_SSH_CONFIG}" | cut -d ' ' -f 2 | sort -u
+
+	return 0
+}
+
+SSHH_SSH_CONFIG=${SSHH_SSH_CONFIG:=$HOME/.ssh/config}
+
+# default options
+SHOW_HELP=0
+SHOW_LIST=0
+RUN_ONCE=0
+
+ARGS=()
+
+while [[ $# -gt 0 ]]; do
+	case $1 in
+	-h | --help)
+		SHOW_HELP=1
+		shift # shift argument
+		;;
+	-l | --list)
+		SHOW_LIST=1
+		shift # shift argument
+		;;
+	-o | --once)
+		RUN_ONCE=1
+		shift # shift argument
+		;;
+	-*)
+		echo "Unknown option $1"
+		echo "Try '$(basename "$0") --help' for more information"
+		exit 1
+		;;
+	*)
+		ARGS+=("$1") # save positional args
+		shift        # shift argument
+		;;
+	esac
+done
+
+set -- "${ARGS[@]}" # restore positional args
+
+# handle options
+
+if [[ $SHOW_HELP -eq 1 ]]; then
+	print_help
+	exit 0
+fi
+
+if [[ $SHOW_LIST -eq 1 ]]; then
+	print_hosts
+	exit 0
+fi
+
+# gather hosts
+mapfile -t HOSTS <<<"$(print_hosts)"
+
+# generate dialog menu array, example: (1 host1 2 host2)
+DIALOG_MENU=()
+for i in "${!HOSTS[@]}"; do
+	DIALOG_MENU+=("$((i + 1))" "${HOSTS[$i]}")
+done
+
+CHOICE_STATUS=0
+
+while [[ $CHOICE_STATUS -eq 0 ]]; do
+	# show dialog
+	CHOICE=$(dialog \
+		--clear --no-lines \
+		--title "Connect with SSH" \
+		--ok-label "Connect" --cancel-label "Quit" \
+		--default-item "${CHOICE:=0}" \
+		--menu "Choose a host from the list" 0 0 0 \
+		"${DIALOG_MENU[@]}" \
+		2>&1 >/dev/tty)
+
+	CHOICE_STATUS=$?
+
+	clear
+
+	if [[ ${CHOICE_STATUS} -gt 0 ]]; then
+		echo "Exiting"
+		exit
+	fi
+
+	INDEX=$((CHOICE - 1))
+	HOST=${HOSTS[$INDEX]}
+
+	echo "Connecting to ${HOST}"
+
+	ssh "${HOST}"
+
+	if [[ $RUN_ONCE -eq 1 ]]; then
+		break
+	fi
+
+done

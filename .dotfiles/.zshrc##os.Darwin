@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+export ZSH_CUSTOM=$HOME/.dotfiles
+export ZSH_COMPDUMP=$HOME/.cache/zcompdump-${HOST}-${ZSH_VERSION}
+
+source <(antibody init)
+
+antibody bundle ohmyzsh/ohmyzsh
+antibody bundle ohmyzsh/ohmyzsh path:themes/robbyrussell.zsh-theme
+antibody bundle ohmyzsh/ohmyzsh path:plugins/git
+antibody bundle ohmyzsh/ohmyzsh path:plugins/history
+antibody bundle ohmyzsh/ohmyzsh path:plugins/macos
+
+antibody bundle zsh-users/zsh-syntax-highlighting
+antibody bundle zsh-users/zsh-autosuggestions
+antibody bundle jessarcher/zsh-artisan
+
+cdpath=(
+	$HOME/src
+	$HOME/src/rijnijssel
+)

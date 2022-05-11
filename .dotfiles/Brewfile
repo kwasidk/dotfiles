@@ -1,0 +1,47 @@
+# Taps
+tap 'homebrew/cask'
+tap 'homebrew/bundle'
+tap 'homebrew/cask-fonts'
+tap 'symfony-cli/tap'
+
+# Binaries
+brew 'antibody'
+brew 'coreutils' # Those that come with macOS are outdated
+brew 'dialog' # Needed for SSHH (.dotfiles/bin/sshh)
+brew 'nss' # Provides certutil
+brew 'nano' # Text editor
+brew 'topgrade' # Upgrade all software on computer
+brew 'git'
+brew 'gh'
+brew 'glab'
+brew 'tree' # List directories in a tree structure
+brew 'htop'
+brew 'ncdu' # Disk usage tool
+
+# Development
+brew 'php'
+brew 'symfony-cli'
+brew 'composer'
+brew 'node'
+brew 'nginx'
+brew 'postgresql'
+brew 'm-cli' # CLI for managing macOS
+cask 'temurin' # OpenJDK packaged by Eclipse
+
+
+# Apps
+cask 'rectangle'
+cask 'nextcloud'
+cask 'discord'
+cask 'docker'
+cask 'jetbrains-toolbox'
+cask 'google-chrome'
+cask 'firefox'
+cask 'visual-studio-code'
+cask 'barrier'
+cask 'spotify'
+cask 'protonmail-bridge'
+
+# Messaging
+cask 'whatsapp'
+
