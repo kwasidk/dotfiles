@@ -19,7 +19,6 @@ brew 'htop'
 brew 'ncdu' # Disk usage tool
 
 # Development
-brew 'php'
 brew 'symfony-cli'
 brew 'composer'
 brew 'node'
