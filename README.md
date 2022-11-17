@@ -1,4 +1,4 @@
-# kattah/dotfiles
+# kwasidk/dotfiles
 
 ## Usage
 
