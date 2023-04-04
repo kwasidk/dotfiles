@@ -19,13 +19,13 @@ brew 'htop'
 brew 'ncdu' # Disk usage tool
 
 # Development
+brew 'php'
 brew 'symfony-cli'
 brew 'composer'
 brew 'node'
 brew 'nginx'
-brew 'postgresql'
 brew 'm-cli' # CLI for managing macOS
-cask 'temurin' # OpenJDK packaged by Eclipse
+
 
 
 # Apps
@@ -40,6 +40,7 @@ cask 'visual-studio-code'
 cask 'barrier'
 cask 'spotify'
 cask 'protonmail-bridge'
+cask '1password'
 
 # Messaging
 cask 'whatsapp'
