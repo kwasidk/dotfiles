@@ -1,0 +1,178 @@
+#!/usr/bin/env bash
+# ~/.macos — macOS defaults, inspirated in the style of Mathias Bynens’ .macos
+
+# Review before running. Some settings may require logout/restart, and some
+# domains/keys change between macOS releases.
+
+# Close System Settings/System Preferences panes so they don’t overwrite changes.
+osascript -e 'tell application "System Settings" to quit' 2>/dev/null || true
+osascript -e 'tell application "System Preferences" to quit' 2>/dev/null || true
+
+# Ask for the administrator password upfront.
+sudo -v
+
+# Keep-alive: update existing `sudo` timestamp until this script has finished.
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+###############################################################################
+# General UI/UX                                                                #
+###############################################################################
+
+# Automatically switch between light and dark mode.
+defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
+
+# Miniaturize windows with a double-click on the title bar: off.
+defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool false
+
+# Use British English first, then Dutch.
+defaults write NSGlobalDomain AppleLanguages -array "en-GB" "nl-NL"
+defaults write NSGlobalDomain AppleLocale -string "en_NL"
+
+# Default web search provider: Google.
+defaults write NSGlobalDomain NSPreferredWebServices -dict \
+  NSWebServicesProviderWebSearch -dict \
+    NSDefaultDisplayName -string "Google" \
+    NSProviderIdentifier -string "com.google.www"
+
+# Disable interface sound effects.
+defaults write NSGlobalDomain "com.apple.sound.beep.feedback" -bool false
+defaults write NSGlobalDomain "com.apple.sound.beep.flash" -bool false
+
+# Enable spring-loaded directories and keep your current half-second delay.
+defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+defaults write NSGlobalDomain com.apple.springing.delay -float 0.5
+
+###############################################################################
+# Keyboard, text, trackpad, and mouse                                          #
+###############################################################################
+
+# Set a fast keyboard repeat rate.
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 25
+
+# Keep automatic capitalization and period substitution enabled.
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool true
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool true
+
+# Use curly quotes.
+defaults write NSGlobalDomain NSUserQuotesArray -array "\\U201c" "\\U201d" "\\U2018" "\\U2019"
+defaults write NSGlobalDomain KB_DoubleQuoteOption -string "\\U201cabc\\U201d"
+defaults write NSGlobalDomain KB_SingleQuoteOption -string "\\U2018abc\\U2019"
+
+# Trackpad: keep Force Click enabled and tap-to-click disabled.
+defaults write NSGlobalDomain com.apple.trackpad.forceClick -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool false
+
+# Trackpad: enable right-click, but don’t use a dedicated corner for secondary click.
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 0
+
+# Mouse speed.
+defaults write NSGlobalDomain com.apple.mouse.scaling -float 2
+
+###############################################################################
+# Screen capture                                                               #
+###############################################################################
+
+# Save screenshots to ~/Documents/Screenshots.
+mkdir -p "${HOME}/Documents/Screenshots"
+defaults write com.apple.screencapture location -string "${HOME}/Documents/Screenshots"
+defaults write com.apple.screencapture target -string "file"
+
+# Keep screenshot UI in selection mode.
+defaults write com.apple.screencapture style -string "selection"
+
+###############################################################################
+# Finder                                                                       #
+###############################################################################
+
+# Show filename extensions.
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Enable spring loading for directories.
+defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+defaults write NSGlobalDomain com.apple.springing.delay -float 0.5
+
+# Avoid creating .DS_Store files on network and USB volumes.
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+# Keep folders on top when sorting by name.
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+# Use list view in Finder by default.
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+###############################################################################
+# Dock, Mission Control, Stage Manager                                         #
+###############################################################################
+
+# Automatically hide and show the Dock.
+defaults write com.apple.dock autohide -bool true
+
+# Use the scale minimize effect and minimize windows into application icons.
+defaults write com.apple.dock mineffect -string "scale"
+defaults write com.apple.dock minimize-to-application -bool true
+
+# Don’t automatically rearrange Spaces based on most recent use.
+defaults write com.apple.dock mru-spaces -bool false
+
+# Stage Manager: off. Tiled window margins: off.
+defaults write com.apple.WindowManager GloballyEnabled -bool false
+defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
+
+###############################################################################
+# Control Center and menu bar                                                  #
+###############################################################################
+
+# Show common menu bar/control center items.
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC Battery" -bool true
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC Clock" -bool true
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC FocusModes" -bool true
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC NowPlaying" -bool true
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC Sound" -bool true
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC WiFi" -bool true
+
+# Hide FaceTime menu bar item.
+defaults write com.apple.controlcenter "NSStatusItem Visible FaceTime" -bool false
+
+###############################################################################
+# Rectangle                                                                    #
+###############################################################################
+
+# Start Rectangle at login and hide its menu bar icon.
+defaults write com.knollsoft.Rectangle launchOnLogin -bool true
+defaults write com.knollsoft.Rectangle hideMenubarIcon -bool true
+
+# Use your captured shortcut style for common Rectangle actions.
+defaults write com.knollsoft.Rectangle leftHalf -dict keyCode -int 123 modifierFlags -int 1572864
+defaults write com.knollsoft.Rectangle rightHalf -dict keyCode -int 124 modifierFlags -int 1572864
+defaults write com.knollsoft.Rectangle maximize -dict keyCode -int 126 modifierFlags -int 1572864
+defaults write com.knollsoft.Rectangle almostMaximize -dict keyCode -int 125 modifierFlags -int 1572864
+
+###############################################################################
+# Mac App Store and software updates                                           #
+###############################################################################
+
+# Enable automatic update checks.
+defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
+
+# Turn on app auto-update.
+defaults write com.apple.commerce AutoUpdate -bool true
+
+###############################################################################
+# Kill affected applications                                                   #
+###############################################################################
+
+for app in \
+  "cfprefsd" \
+  "Control Center" \
+  "Dock" \
+  "Finder" \
+  "Rectangle" \
+  "SystemUIServer" \
+  "Terminal"; do
+  killall "${app}" &>/dev/null || true
+done
+
+echo "Done. Some changes may require logout/restart to take effect."
