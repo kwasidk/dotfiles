@@ -1,8 +1,6 @@
 # Taps
 tap 'homebrew/cask'
 tap 'homebrew/bundle'
-tap 'homebrew/cask-fonts'
-tap 'symfony-cli/tap'
 
 # Binaries
 brew 'antibody'
@@ -12,36 +10,38 @@ brew 'nss' # Provides certutil
 brew 'nano' # Text editor
 brew 'topgrade' # Upgrade all software on computer
 brew 'git'
-brew 'gh'
-brew 'glab'
 brew 'tree' # List directories in a tree structure
 brew 'htop'
 brew 'ncdu' # Disk usage tool
+brew 'fd' # Better find alternative
 
-# Development
-brew 'php'
-brew 'symfony-cli'
-brew 'composer'
-brew 'node'
-brew 'nginx'
-brew 'm-cli' # CLI for managing macOS
-
-
+# Development *I'm not a developer anymore*
+#brew 'php'
+#brew 'symfony-cli'
+#brew 'composer'
+#brew 'node'
+#brew 'nginx'
+#brew 'm-cli' # CLI for managing macOS
+#cask 'docker'
+#cask 'jetbrains-toolbox'
+cask 'visual-studio-code'
 
 # Apps
 cask 'rectangle'
 cask 'nextcloud'
-cask 'discord'
-cask 'docker'
-cask 'jetbrains-toolbox'
 cask 'google-chrome'
 cask 'firefox'
-cask 'visual-studio-code'
-cask 'barrier'
 cask 'spotify'
 cask 'protonmail-bridge'
 cask '1password'
+cask 'steam'
+cask 'microsoft-office'
+cask 'mullvad-vpn'
+cask 'soulseek'
+cask 'taskexplorer'
+cask 'oversight'
+cask 'iina'
 
 # Messaging
 cask 'whatsapp'
-
+cask 'discord'
