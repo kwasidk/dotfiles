@@ -9,5 +9,5 @@ alias pull="git pull"
 alias clone="git clone"
 
 # laravel
-alias sail="vendor/bin/sail"
-alias art="php artisan"
+# alias sail="vendor/bin/sail"
+# alias art="php artisan"
