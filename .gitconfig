@@ -1,6 +1,6 @@
 [user]
 	name = Kwasi Kattah
-	email = kwasi@kattah.nl
+	email = post@kattah.nl
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
