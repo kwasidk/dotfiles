@@ -14,6 +14,7 @@ brew 'tree' # List directories in a tree structure
 brew 'htop'
 brew 'ncdu' # Disk usage tool
 brew 'fd' # Better find alternative
+brew 'mole'
 
 # Development *I'm not a developer anymore*
 #brew 'php'
