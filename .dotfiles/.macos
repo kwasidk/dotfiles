@@ -23,15 +23,18 @@ sudo -v
 # Keep-alive: update existing sudo time stamp until this script has finished.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+# Enable startup chime. Use %01 to disable it.
+sudo nvram StartupMute=%00
+
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
 
-# Set computer name. Uncomment and edit these for a new Mac.
-# sudo scutil --set ComputerName "Kwasi-MacBook"
-# sudo scutil --set HostName "Kwasi-MacBook"
-# sudo scutil --set LocalHostName "Kwasi-MacBook"
-# sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Kwasi-MacBook"
+ Set computer name. Uncomment and edit these for a new Mac.
+ sudo scutil --set ComputerName "Kwasi-MBP"
+ sudo scutil --set HostName "Kwasi-MBP"
+ sudo scutil --set LocalHostName "Kwasi-MBP"
+ sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Kwasi-MBP"
 
 # Automatically switch between light and dark appearance.
 defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
@@ -105,12 +108,6 @@ defaults write com.apple.AppleMultitouchMouse MouseHorizontalScroll -bool true
 defaults write com.apple.AppleMultitouchMouse MouseVerticalScroll -bool true
 defaults write com.apple.AppleMultitouchMouse MouseMomentumScroll -bool true
 
-###############################################################################
-# Sound and startup chime                                                     #
-###############################################################################
-
-# Enable startup chime. Use %01 to disable it.
-sudo nvram StartupMute=%00
 
 ###############################################################################
 # Screen                                                                      #
