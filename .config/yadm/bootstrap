@@ -10,11 +10,9 @@ SYSTEM_TYPE=$(uname -s)
 HOSTNAME="Kwasi-MBP"
 
 function install:mac() {
-    if test ! $(which brew); then
+    if ! command -v brew >/dev/null 2>&1; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-
-
 
     brew update
     brew tap homebrew/bundle
@@ -44,20 +42,16 @@ function install:mac() {
     sudo scutil --set LocalHostName "$HOSTNAME"
     sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$HOSTNAME"
 
-    if [ -f "$DOTFILES/.macOS"]; then 
+    if [ -f "$DOTFILES/.macOS" ]; then
         source "$DOTFILES/.macOS"
     fi
 }
 
 case "$SYSTEM_TYPE" in
     Darwin)
-        echo "system: macos"
         install:mac
         ;;
-    Linux)
-        echo "system: linux"
-        install:linux
+    *)
+        echo "No bootstrap steps defined for $SYSTEM_TYPE"
         ;;
 esac
-
-
