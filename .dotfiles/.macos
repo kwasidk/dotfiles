@@ -30,7 +30,7 @@ sudo nvram StartupMute=%00
 # General UI/UX                                                               #
 ###############################################################################
 
- Set computer name. Uncomment and edit these for a new Mac.
+# Set computer name. Uncomment and edit these for a new Mac.
  sudo scutil --set ComputerName "Kwasi-MBP"
  sudo scutil --set HostName "Kwasi-MBP"
  sudo scutil --set LocalHostName "Kwasi-MBP"
