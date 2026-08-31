@@ -14,6 +14,8 @@ function install:mac() {
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
 
+
+
     brew update
     brew tap homebrew/bundle
     brew bundle --file "$DOTFILES/Brewfile"
@@ -41,19 +43,10 @@ function install:mac() {
     sudo scutil --set HostName "$HOSTNAME"
     sudo scutil --set LocalHostName "$HOSTNAME"
     sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$HOSTNAME"
+
+    if [ -f "$DOTFILES/.macOS"]; then 
+        source "$DOTFILES/.macOS"
+    fi
 }
 
-function install:linux() {
-    ln -s $DOTFILES/.zshrc $HOME/.zshrc
-}
 
-case "$SYSTEM_TYPE" in
-    Darwin)
-        echo "system: macos"
-        install:mac
-        ;;
-    Linux)
-        echo "system: linux"
-        install:linux
-        ;;
-esac

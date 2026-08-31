@@ -15,7 +15,3 @@ antibody bundle zsh-users/zsh-syntax-highlighting
 antibody bundle zsh-users/zsh-autosuggestions
 antibody bundle jessarcher/zsh-artisan
 
-cdpath=(
-	$HOME/src
-	$HOME/src/rijnijssel
-)
