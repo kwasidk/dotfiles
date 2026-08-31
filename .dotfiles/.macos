@@ -31,10 +31,10 @@ sudo nvram StartupMute=%00
 ###############################################################################
 
 # Set computer name. Uncomment and edit these for a new Mac.
- sudo scutil --set ComputerName "Kwasi-MBP"
- sudo scutil --set HostName "Kwasi-MBP"
- sudo scutil --set LocalHostName "Kwasi-MBP"
- sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Kwasi-MBP"
+ # sudo scutil --set ComputerName "Kwasi-MBP"
+ # sudo scutil --set HostName "Kwasi-MBP"
+ # sudo scutil --set LocalHostName "Kwasi-MBP"
+# sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Kwasi-MBP"
 
 # Automatically switch between light and dark appearance.
 defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
