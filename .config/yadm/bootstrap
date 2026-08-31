@@ -49,4 +49,15 @@ function install:mac() {
     fi
 }
 
+case "$SYSTEM_TYPE" in
+    Darwin)
+        echo "system: macos"
+        install:mac
+        ;;
+    Linux)
+        echo "system: linux"
+        install:linux
+        ;;
+esac
+
 
