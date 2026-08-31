@@ -3,7 +3,7 @@ tap 'homebrew/cask'
 tap 'homebrew/bundle'
 
 # Binaries
-brew 'antibody'
+# brew 'antibody'
 brew 'coreutils' # Those that come with macOS are outdated
 brew 'dialog' # Needed for SSHH (.dotfiles/bin/sshh)
 brew 'nss' # Provides certutil
